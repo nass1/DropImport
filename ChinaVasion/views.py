@@ -74,44 +74,43 @@ def PostToShpify(request):
     shopify.ShopifyResource.set_site(shop_url)
     url = "https://secure.chinavasion.com/api/getProductDetails.php"
     new_product = shopify.Product()
-    try:
-        if 'ProductName' in request.GET and request.GET['ProductName']:
-            q = request.GET['ProductName']
-            dis = request.GET['dis']
-            price = request.GET['price']
-            mainPic = request.GET['mainPic']
-            productType = request.GET['productType']
-            additionalPic = request.GET['additionalPic']
-            print additionalPic
+    if request.method == 'POST':
+        q = request.POST['ProductName']
+        dis = request.POST['dis']
+        price = request.POST['price']
+        mainPic = request.POST['mainPic']
+        productType = request.POST['productType']
+        additionalPic = request.POST['additionalPic']
+        print request.POST['ProductName']
 
-            new_product.title = q
-            new_product.body_html = dis
-            new_product.product_type = productType
-            new_product.save()
+        new_product.title = q
+        new_product.body_html = dis
+        new_product.product_type = productType
+        new_product.save()
 
-            makelist = additionalPic
+        makelist = additionalPic
 
-            #Price
-            product = shopify.Product.find(new_product.id)
-            product.variants[0].price = price
-            product.save()
+        #Price
+        product = shopify.Product.find(new_product.id)
+        product.variants[0].price = price
+        product.save()
 
-            #Main Image
+        #Main Image
+        new_image = shopify.Image()
+        new_image = shopify.Image(dict(product_id=new_product.id))
+        new_image.src = mainPic
+        new_image.save()
+        #additinola images
+        makelist1 = makelist.replace("[","").replace("u'","").replace("]","").replace(",","").replace("'","")
+        for i in makelist1.split():
             new_image = shopify.Image()
             new_image = shopify.Image(dict(product_id=new_product.id))
-            new_image.src = mainPic
+            new_image.src = i
             new_image.save()
-            #additinola images
-            makelist1 = makelist.replace("[","").replace("u'","").replace("]","").replace(",","").replace("'","")
-            for i in makelist1.split():
-                new_image = shopify.Image()
-                new_image = shopify.Image(dict(product_id=new_product.id))
-                new_image.src = i
-                new_image.save()
 
             print type(additionalPic)
             #print ("======>>>>>>>>>>", makelist1)
-    except:
-        return render(request, "suppliers.html", {"error":"Error"})
+    else:
+        return HttpResponseRedirect("/ChinaVasion/supp/")
 
     return HttpResponseRedirect("/ChinaVasion/supp/")

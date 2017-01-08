@@ -135,7 +135,7 @@
     </form>
 
 	<h4>___________________________________________________________________________________</h4>
-	<form method="GET" action="{% url 'ChinaVasion:postToShopify' %}" > {% csrf_token %}
+	<form method="POST" action="{% url 'ChinaVasion:postToShopify' %}" > {% csrf_token %}
   <div class="form-group">
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#home">Details</a></li>
