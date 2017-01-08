@@ -17,9 +17,10 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from .views import my_homepage_view
 from ChinaVasion import views
-
+from AliExpress import views
 urlpatterns = [
     url(r'^$', my_homepage_view, name="HomePage"),
     url(r'^admin/', admin.site.urls),
-    url(r'^ChinaVasion/',include("ChinaVasion.urls"))
+    url(r'^ChinaVasion/',include("ChinaVasion.urls")),
+    url(r'^AliExpress/',include("AliExpress.urls"))
 ]

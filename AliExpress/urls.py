@@ -1,15 +1,14 @@
 from django.conf.urls import url, include
-from .views import hello, supp, PostToShpify
+from .views import helloAli
 from django.conf import settings
 from django.conf.urls.static import static
 
 
-app_name = 'ChinaVasion'
+app_name = 'AliExpress'
 
 urlpatterns = [
-    url(r'^$', hello,name='index'),
-    url(r'^supp/$', supp, name="supp"),
-    url(r'^postprod/$', PostToShpify, name="postToShopify"),
+    url(r'^$', helloAli,name='index'),
+    
 
 ]
 
