@@ -1,7 +1,7 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -176,14 +176,16 @@
 			<input type="hidden" name="additionalPic" value="{{additional_images_lst}}">
             {% for i in additional_images_lst %}
                 <label class="checkbox-inline">
-                 <input type="checkbox" value="{{ i }}" name=""checked><img src="{{ i }}" class="img-thumbnail" width="304" height="236">
+                 <input type="checkbox" value="{{ i }}" name="checks[]"checked><img src="{{ i }}" class="img-thumbnail" width="304" height="236"></input>
                 </label>
           {% endfor %}
 
         </div>
         <div id="menu3" class="tab-pane fade">
-          <h3>Menu 3</h3>
-          <p>To be edit</p>
+          <h3>Other Images</h3>
+
+			{{form2}}
+
         </div>
       </div>
     </div>

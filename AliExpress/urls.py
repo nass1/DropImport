@@ -1,5 +1,5 @@
 from django.conf.urls import url, include
-from .views import helloAli
+from .views import helloAli, GetAli
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -7,7 +7,7 @@ from django.conf.urls.static import static
 app_name = 'AliExpress'
 
 urlpatterns = [
-    url(r'^$', helloAli,name='index'),
+    url(r'^$', GetAli,name='index'),
     
 
 ]
