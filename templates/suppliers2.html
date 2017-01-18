@@ -1,0 +1,230 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suppliers</title>
+
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/datepicker3.css' %}" rel="stylesheet">
+<link href="{% static 'css/styles.css' %}" rel="stylesheet">
+
+<!--Icons-->
+<script src="{% static 'js/lumino.glyphs.js' %}"></script>
+
+<!--[if lt IE 9]>
+<script src="{% static 'js/html5shiv.js' %}"></script>
+<script src="{% static 'js/respond.min.js' %}"></script>
+<![endif]-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
+  <script>
+  tinymce.init({
+    selector: '#mytextarea',
+    theme: 'modern',
+  height: 500,
+  width: 500,
+  plugins: 'code',
+
+  toolbar: ['newdocument, bold, italic, underline, strikethrough, alignleft, aligncenter, alignright, alignjustify, formatselect, code',
+    'fontselect fontsizeselect cut copy paste bullist numlist outdent indent blockquote',
+    'undo redo removeformat subscript superscript',
+    ]
+
+  });
+  </script>
+
+
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"><span>Lumino</span>Admin</a>
+				<ul class="user-menu">
+					<li class="dropdown pull-right">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> User <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Profile</a></li>
+							<li><a href="#"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Settings</a></li>
+							<li><a href="#"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+							
+		</div><!-- /.container-fluid -->
+	</nav>
+		
+	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+		<form role="search">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Search">
+			</div>
+		</form>
+		<ul class="nav menu">
+			<li><a href="{% url 'ChinaVasion:index' %}"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Dashboard</a></li>
+			<li class="active"><a href="{% url 'ChinaVasion:supp' %}"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Suppliers</a></li>
+			<li><a href="charts.html"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Charts</a></li>
+			<li><a href="tables.html"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Tables</a></li>
+			<li><a href="forms.html"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg> Forms</a></li>
+			<li><a href="panels.html"><svg class="glyph stroked app-window"><use xlink:href="#stroked-app-window"></use></svg> Alerts &amp; Panels</a></li>
+			<li><a href="icons.html"><svg class="glyph stroked star"><use xlink:href="#stroked-star"></use></svg> Icons</a></li>
+			<li class="parent ">
+				<a href="#">
+					<span data-toggle="collapse" href="#sub-item-1"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> Dropdown 
+				</a>
+				<ul class="children collapse" id="sub-item-1">
+					<li>
+						<a class="" href="#">
+							<svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 1
+						</a>
+					</li>
+					<li>
+						<a class="" href="#">
+							<svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 2
+						</a>
+					</li>
+					<li>
+						<a class="" href="#">
+							<svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 3
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li role="presentation" class="divider"></li>
+			<li><a href="login.html"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Login Page</a></li>
+		</ul>
+		
+	</div><!--/.sidebar-->
+		
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">		
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="#"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
+				<li class="active">Icons</li>
+			</ol>
+		</div><!--/.row-->
+		
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">Widgets</h1>
+			</div>
+		</div><!--/.row-->
+	<h4>___________________________________________________________________________________</h4>
+	<form action="" method="post">{% csrf_token %}
+        <div class="form-group">
+            {{ form.Name.error }}
+            <label for="id_Name">Name:</label>
+            {{ form.as_p }}
+        </div>
+
+        <input class="btn btn-primary" type="submit" value="Submit">
+    </form>
+
+	<h4>___________________________________________________________________________________</h4>
+	<form method="POST" action="{% url 'ChinaVasion:postToShopify' %}" > {% csrf_token %}
+  <div class="form-group">
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#home">Details</a></li>
+        <li><a data-toggle="tab" href="#menu1">Description</a></li>
+        <li><a data-toggle="tab" href="#menu2">Images</a></li>
+        <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
+      </ul>
+
+      <div class="tab-content">
+        <div id="home" class="tab-pane fade in active">
+          <h3>Product Name</h3>
+          <label for="usr">Id:</label>
+            <input type="text" class="form-control" id="usr" value="{{product_id_lst}}">
+          <label for="ProductName">Name:</label>
+            <input type="text" class="form-control" id="ProductName" name="ProductName" value="{{product_name_lst}}">
+          <label for="usr">Price(Change Price Here):</label>
+            <input type="text" class="form-control" id="usr" name="price" value="{{product_price}}">
+          <label for="usr">Product Type</label>
+            <input type="text" class="form-control" id="usr" name="productType" value="">
+
+          <label for="usr">Product Link:</label>
+            <h4><a href="{{ product_url_lst }}" target="_blank">Take Me to Product On ChinaVasion</a></h4>
+
+        </div>
+        <div id="menu1" class="tab-pane fade">
+          <h3>Details</h3>
+          <label for="comment">Comment:</label>
+             <textarea class="form-control" rows="5" name="dis"id="mytextarea">{{overview_lst}}</textarea>
+
+
+        </div>
+
+        <div id="menu2" class="tab-pane fade">
+          <h3>Images</h3>
+                <label class="checkbox-inline">
+                 <input type="checkbox" value="{{ main_picture_lst }}" name="mainPic" checked><img src="{{ main_picture_lst }}" class="img-thumbnail" width="304" height="236">
+                </label>
+			<input type="hidden" name="additionalPic" value="{{additional_images_lst}}">
+            {% for i in additional_images_lst %}
+                <label class="checkbox-inline">
+                 <input type="checkbox" value="{{ i }}" name="checks[]"checked><img src="{{ i }}" class="img-thumbnail" width="304" height="236"></input>
+                </label>
+          {% endfor %}
+
+        </div>
+        <div id="menu3" class="tab-pane fade">
+          <h3>Other Images</h3>
+
+			{{form2}}
+
+        </div>
+      </div>
+    </div>
+<button type="submit" class="btn btn-default">Submit</button>
+</form>
+
+
+
+	<h4>______________________________________________________________________________________</h4>
+	</div>	<!--/.main-->
+		  
+
+
+
+	<script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/chart.min.js' %}"></script>
+	<script src="{% static 'js/chart-data.js' %}"></script>
+	<script src="{% static 'js/easypiechart.js' %}"></script>
+	<script src="{% static 'js/easypiechart-data.js' %}"></script>
+	<script src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+	<script>
+		$('#calendar').datepicker({
+		});
+
+		!function ($) {
+		    $(document).on("click","ul.nav li.parent > a > span.icon", function(){          
+		        $(this).find('em:first').toggleClass("glyphicon-minus");      
+		    }); 
+		    $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+		}(window.jQuery);
+
+		$(window).on('resize', function () {
+		  if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+		})
+		$(window).on('resize', function () {
+		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+		})
+	</script>	
+</body>
+
+</html>

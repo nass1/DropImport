@@ -1,7 +1,21 @@
 from django.shortcuts import render
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from bs4 import BeautifulSoup
 import requests
 from .forms import SearchForm
+import shopify
+from .otherFunction import ImgeFilters, ImgeFiltersSelection, ImgeFiltersOther
+#___________________________________________________________________________________
+api = "d8abe2f7be6107b6f6f4cc5f220f14ca"
+password = "73f30d24102f182b6cb7b1b4e9b8b6f1"
+shared_secret = "0b4c643fa7edd739a1dda92bade84e22"
+url_format = "https://apikey:password@hostname/admin/resource.json"
+shop_url = "https://%s:%s@mr-nice.myshopify.com/admin" % (api, password)
+shopify.ShopifyResource.set_site(shop_url)
+key = "DA8gz8DqfsXnYcm8iH54zM9x_zRynBRw_IJAnL8Xszw."
+#___________________________________________________________________________________
+
+
 
 def helloAli(request):
 
@@ -20,34 +34,34 @@ def GetAli(request):
                 data = r.content
                 soup = BeautifulSoup(r.content, "html.parser")
                 images = [] #The Images
-                print "the Imgaes are ______________________________________________>"
+                
                 for i in soup.find_all("img"):
                     if "https" in i.get("src"):
-                        if "_50x50.jpg" in i.get("src"):
-                            a = i.get("src").replace("_50x50.jpg", "")
-                            images.append(a)
-                        else:
-                            b = i.get("src").replace("_50x50.jpeg", "")
-                            images.append(b)
-                print images
-                print "the Title are are ______________________________________________>"
+                        c = i.get("src")
+                        images.append(c)
+                images1 =  ImgeFilters(images)
+                images2 =  ImgeFiltersSelection(images)
+                images3 =  ImgeFiltersOther(images)
+                print "========Images========"
+                print images1
+                
                 title =  soup.title.text #Title
 
                 print "the Size are are ______________________________________________>"
                 Size = []  #The size
                 for i in soup.findAll("a", {"data-role": "sku"}):
                     if len(i.text) != 0:
-                        print i.text, "=====>", len(i.text), "======>", type(len(i.text))
+                        #print i.text, "=====>", len(i.text), "======>", type(len(i.text))
                         Size.append(i.text)
 
 
-                print "the Discrption are are ______________________________________________>"
+                # "the Discrption are are ______________________________________________>"
                 Discrption = []
                 for i in soup.findAll("li",{"class":"property-item"}):
-                    print i.text
+                    #print i.text
                     Discrption.append(i.text)
 
-                print "the Price is/are ______________________________________________>"
+                # "the Price is/are ______________________________________________>"
                 price = None
                 for i in soup.findAll("span", {"class": "p-price"}):
                     price = i.text
@@ -57,7 +71,9 @@ def GetAli(request):
                            "title": title,
                            "size": Size,
                            "price": price,
-                           "images": images,
+                           "images1": images1,
+                           "images2": images2, 
+                           "images3": images3,  
                            "form": form,
                            "Discrption":Discrption,
 
@@ -68,3 +84,34 @@ def GetAli(request):
     else:
         form = SearchForm()
     return render(request, 'suppliers1.html', {'form': form})
+
+
+
+def postAli(request):
+    shop_url = "https://%s:%s@mr-nice.myshopify.com/admin" % (api, password)
+    shopify.ShopifyResource.set_site(shop_url)
+    url = "https://secure.chinavasion.com/api/getProductDetails.php"
+    new_product = shopify.Product()
+    if request.method == 'POST':
+        q = request.POST['title']
+        dis = request.POST['dis']
+        price = request.POST['price']
+        #q = request.POST['title']
+       
+        #new product: title, discrption
+        new_product.title = q
+        new_product.body_html = dis
+        new_product.save()
+        
+        #Price
+        product = shopify.Product.find(new_product.id)
+        product.variants[0].price = price
+        product.save()
+        
+        
+    else:
+        return HttpResponseRedirect("/AliExpress/")
+
+    return HttpResponseRedirect("/AliExpress/")
+        
+    

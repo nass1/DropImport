@@ -1,5 +1,28 @@
 <head>
     this is for Ali
+    
+    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
+  <script>
+  tinymce.init({
+    selector: '#mytextarea',
+    theme: 'modern',
+  height: 500,
+  width: 500,
+  plugins: 'code',
+
+  toolbar: ['newdocument, bold, italic, underline, strikethrough, alignleft, aligncenter, alignright, alignjustify, formatselect, code',
+    'fontselect fontsizeselect cut copy paste bullist numlist outdent indent blockquote',
+    'undo redo removeformat subscript superscript',
+    ]
+
+  });
+  </script>
+       
+    
 </head>
 
 <body>
@@ -12,10 +35,11 @@
 
         <input class="btn btn-primary" type="submit" value="Submit">
     </form>
-
+    
+<form action="{% url 'AliExpress:postToShopifyAli' %}" method="post">{% csrf_token %}
 <b>____________________________________________________________________________________________________</b><br>
 <h3>Title:</h3><br>
-    {{title}}<br>
+    <input type="text" class="form-control" id="ProductName" name="title" value="{{title}}"><br>
 
 <b>____________________________________________________________________________________________________</b><br>
 <h3>size:</h3><br>
@@ -25,25 +49,48 @@
     <br>
 <b>____________________________________________________________________________________________________</b><br>
  <h3>price:</h3><br>
-    {{price}}<br>
+    <input type="text" class="form-control" id="price" name="price" value="{{price}}"><br>
 <b>____________________________________________________________________________________________________</b><br>
 
  <h3>Discrption:</h3><br>
-<table>
+
+<textarea class="form-control" rows="5" name="dis"id="mytextarea">{{overview_lst}}
  {% for i in Discrption %}<br>
   <tr>
 {{i}}
   </tr>
 {% endfor %}
-    </table>
+</textarea>
 <br>
     <b>____________________________________________________________________________________________________</b><br>
 <h3>Images:</h3><br>
-    {% for i in images %}
+    {% for i in images1 %}
     {{i}} <br>
 {% endfor %}
 
 
-
+   
+    {% for i in images1 %}
+                <label class="checkbox-inline">
+                    <input type="checkbox" value="{{ i }}" name="checks[]"checked><a href={{ i }} target="_blank"><img src="{{ i }}" class="img-thumbnail" width="304" height="236"></a</input>
+                </label>
+          {% endfor %}
+<h1>________________________________________________________________________________________________________________________________________</h1>
+      <h3>Selected Pictures </h3>              
+      {% for i in images2 %}
+                <label class="checkbox-inline">
+                    <input type="checkbox" value="{{ i }}" name="checks[]"checked><a href={{ i }} target="_blank"><img src="{{ i }}" class="img-thumbnail" width="304" height="236"></a</input>
+                </label>
+          {% endfor %}  
+<h1>________________________________________________________________________________________________________________________________________</h1>
+      <h3>Optinals Pictures </h3>              
+      {% for i in images3 %}
+                <label class="checkbox-inline">
+                    <input type="checkbox" value="{{ i }}" name="checks[]"><a href={{ i }} target="_blank"><img src="{{ i }}" class="img-thumbnail" width="304" height="236"></a</input>
+                </label>
+          {% endfor %}  
+           
+                    <input class="btn btn-primary" type="submit" value="Submit">
+    </form>
 </body>
 
