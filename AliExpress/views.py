@@ -42,12 +42,12 @@ def GetAli(request):
                 images1 =  ImgeFilters(images)
                 images2 =  ImgeFiltersSelection(images)
                 images3 =  ImgeFiltersOther(images)
-                print "========Images========"
-                print images1
+                #print "========Images========"
+                #print images1
                 
                 title =  soup.title.text #Title
 
-                print "the Size are are ______________________________________________>"
+                #print "the Size are are ______________________________________________>"
                 Size = []  #The size
                 for i in soup.findAll("a", {"data-role": "sku"}):
                     if len(i.text) != 0:
@@ -92,23 +92,46 @@ def postAli(request):
     shopify.ShopifyResource.set_site(shop_url)
     url = "https://secure.chinavasion.com/api/getProductDetails.php"
     new_product = shopify.Product()
+    shop = shopify.Shop.current()
     if request.method == 'POST':
         q = request.POST['title']
         dis = request.POST['dis']
         price = request.POST['price']
+        mainPic = request.POST.getlist('checksMain[]')
         #q = request.POST['title']
        
         #new product: title, discrption
         new_product.title = q
         new_product.body_html = dis
+
         new_product.save()
-        
+
         #Price
         product = shopify.Product.find(new_product.id)
+        product1 = shopify.Product.find(new_product.id)
         product.variants[0].price = price
+        product.variants[0].option1 = "Pink"
+
+        product.variants[0].sku = "3245"
         product.save()
-        
-        
+
+        print ">>>>>>>>>>>>", shop
+
+
+
+        #Variants
+
+
+
+
+
+        # Main Image:
+        for i in mainPic:
+            new_image = shopify.Image()
+            new_image = shopify.Image(dict(product_id=new_product.id))
+            new_image.src = i
+            new_image.save()
+
     else:
         return HttpResponseRedirect("/AliExpress/")
 

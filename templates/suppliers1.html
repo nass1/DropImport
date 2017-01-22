@@ -69,17 +69,18 @@
 {% endfor %}
 
 
-   
+
     {% for i in images1 %}
                 <label class="checkbox-inline">
-                    <input type="checkbox" value="{{ i }}" name="checks[]"checked><a href={{ i }} target="_blank"><img src="{{ i }}" class="img-thumbnail" width="304" height="236"></a</input>
+                 <input type="checkbox" value="{{ i }}" name="checksMain[]"checked><img src="{{ i }}" class="img-thumbnail" width="304" height="236"></input>
                 </label>
           {% endfor %}
+
 <h1>________________________________________________________________________________________________________________________________________</h1>
       <h3>Selected Pictures </h3>              
       {% for i in images2 %}
                 <label class="checkbox-inline">
-                    <input type="checkbox" value="{{ i }}" name="checks[]"checked><a href={{ i }} target="_blank"><img src="{{ i }}" class="img-thumbnail" width="304" height="236"></a</input>
+                    <input type="checkbox" value="{{ i }}" name="checks[]"checked><a href={{ i }} target="_blank"><img src="{{ i }}" class="img-thumbnail" width="236" height="304"></a</input>
                 </label>
           {% endfor %}  
 <h1>________________________________________________________________________________________________________________________________________</h1>
@@ -89,7 +90,7 @@
                     <input type="checkbox" value="{{ i }}" name="checks[]"><a href={{ i }} target="_blank"><img src="{{ i }}" class="img-thumbnail" width="304" height="236"></a</input>
                 </label>
           {% endfor %}  
-           
+           <br>
                     <input class="btn btn-primary" type="submit" value="Submit">
     </form>
 </body>
