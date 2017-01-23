@@ -103,32 +103,35 @@ def postAli(request):
         #new product: title, discrption
         new_product.title = q
         new_product.body_html = dis
-        variant1 = shopify.Variant()
-        variant2 = shopify.Variant(dict(price="20.00", option1="Second", title="green"))    
-        variant3 = shopify.Variant(dict(price="20.00", option1="first", title="red"))
-        new_product.variants = [variant1, variant2, variant3]
+        #new_product.add_variant = 
         new_product.save()
 
-        #Price
-        product = shopify.Product.find(new_product.id)
-        #product1 = shopify.Product.find(new_product.id)
-        product.variants[0].price = price
-        product.variants[0].option1 = "pink"
-        product.save()
+        
+        
 
         print ">>>>>>>>>>>>", shop.id
      
         # Main Image:
+        imgID = [None]
         for i in mainPic:
             new_image = shopify.Image()
             new_image = shopify.Image(dict(product_id=new_product.id))
             new_image.src = i
-            print new_image.id
             new_image.save()
-
-        #Variants
-
+            imgID.append(new_image.id)
             
+        print "imagei",">>>>>", imgID[1]
+        #Variants
+        productvar = shopify.Product.find(new_product.id)
+        
+        variant2 = shopify.Variant(dict(price="20.00", option1="first", image_id=imgID[1] ))    
+        variant3 = shopify.Variant(dict(price="20.00", option1="third"))
+        productvar.variants = [variant2, variant3]  
+        productvar.save()
+        
+        #Price
+
+        
     else:
         return HttpResponseRedirect("/AliExpress/")
 
