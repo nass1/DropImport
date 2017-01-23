@@ -124,7 +124,7 @@ def postAli(request):
         #Variants
         productvar = shopify.Product.find(new_product.id)
         
-        variant2 = shopify.Variant(dict(price="20.00", option1="first", image_id=imgID[1] ))    
+        variant2 = shopify.Variant(dict(price="20.00", option1="first", image_id=imgID[1]))    
         variant3 = shopify.Variant(dict(price="20.00", option1="third"))
         productvar.variants = [variant2, variant3]  
         productvar.save()
