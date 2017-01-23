@@ -5,6 +5,7 @@ import requests
 from .forms import SearchForm
 import shopify
 from .otherFunction import ImgeFilters, ImgeFiltersSelection, ImgeFiltersOther
+import re
 #___________________________________________________________________________________
 api = "d8abe2f7be6107b6f6f4cc5f220f14ca"
 password = "73f30d24102f182b6cb7b1b4e9b8b6f1"
@@ -96,7 +97,8 @@ def postAli(request):
     if request.method == 'POST':
         q = request.POST['title']
         dis = request.POST['dis']
-        price = request.POST['price']
+        priceAli = request.POST['price']
+        priceFinal = re.sub(r'-.*$',"",priceAli)
         mainPic = request.POST.getlist('checksMain[]')
         #q = request.POST['title']
        
@@ -105,10 +107,7 @@ def postAli(request):
         new_product.body_html = dis
         #new_product.add_variant = 
         new_product.save()
-
-        
-        
-
+    
         print ">>>>>>>>>>>>", shop.id
      
         # Main Image:
@@ -121,11 +120,12 @@ def postAli(request):
             imgID.append(new_image.id)
             
         print "imagei",">>>>>", imgID[1]
+        print priceFinal
         #Variants
         productvar = shopify.Product.find(new_product.id)
         
-        variant2 = shopify.Variant(dict(price="20.00", option1="first", image_id=imgID[1]))    
-        variant3 = shopify.Variant(dict(price="20.00", option1="third"))
+        variant2 = shopify.Variant(dict(price=float(priceFinal), option1="first", image_id=imgID[1]))    
+        variant3 = shopify.Variant(dict(price=float(priceFinal), option1="third"))
         productvar.variants = [variant2, variant3]  
         productvar.save()
         
