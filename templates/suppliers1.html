@@ -36,6 +36,8 @@
         <input class="btn btn-primary" type="submit" value="Submit">
     </form>
     
+    
+    
 <form action="{% url 'AliExpress:postToShopifyAli' %}" method="post">{% csrf_token %}
 <b>____________________________________________________________________________________________________</b><br>
 <h3>Title:</h3><br>
@@ -63,6 +65,21 @@
 </textarea>
 <br>
     <b>____________________________________________________________________________________________________</b><br>
+    
+    
+    <h3>Comments:</h3><br>
+    <ul>
+        {% for i in comments %}
+        <li>{{i}}</li>
+        
+    </ul>
+    
+    
+{% endfor %}
+    
+    <br>
+    <b>____________________________________________________________________________________________________</b><br>
+    
 <h3>Images:</h3><br>
     {% for i in images1 %}
     {{i}} <br>
@@ -72,7 +89,7 @@
 
     {% for i in images1 %}
                 <label class="checkbox-inline">
-                 <input type="checkbox" value="{{ i }}" name="checksMain[]"checked><img src="{{ i }}" class="img-thumbnail" width="304" height="236"></input>
+                 <input type="checkbox" value="{{ i }}" name="checksMain[]"checked><img src="{{ i }}" class="img-thumbnail" width="304" height="236">
                 </label>
           {% endfor %}
 
@@ -80,18 +97,30 @@
       <h3>Selected Pictures </h3>              
       {% for i in images2 %}
                 <label class="checkbox-inline">
-                    <input type="checkbox" value="{{ i }}" name="checks[]"checked><a href={{ i }} target="_blank"><img src="{{ i }}" class="img-thumbnail" width="236" height="304"></a</input>
+                    <input type="checkbox" value="{{ i }}" name="checks[]"checked><a href={{ i }} target="_blank"><img src="{{ i }}" class="img-thumbnail" width="236" height="304"></a>
                 </label>
           {% endfor %}  
 <h1>________________________________________________________________________________________________________________________________________</h1>
       <h3>Optinals Pictures </h3>              
       {% for i in images3 %}
                 <label class="checkbox-inline">
-                    <input type="checkbox" value="{{ i }}" name="checks[]"><a href={{ i }} target="_blank"><img src="{{ i }}" class="img-thumbnail" width="304" height="236"></a</input>
+                    <input type="checkbox" value="{{ i }}" name="checks[]"><a href={{ i }} target="_blank"><img src="{{ i }}" class="img-thumbnail" width="304" height="236"></a>
                 </label>
           {% endfor %}  
            <br>
                     <input class="btn btn-primary" type="submit" value="Submit">
     </form>
+    
+<h1>________________________________________________________________________________________________________________________________________</h1>    
+
+    {% for i in comments%}
+    <h3>{{i}}</h3>
+    {% endfor %}
+    
+    
+    
+    
+    
+    
 </body>
 

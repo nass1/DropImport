@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from bs4 import BeautifulSoup
 import requests
-from .forms import SearchForm
+from .forms import SearchForm, GetCommentForm
 import shopify
 from .otherFunction import ImgeFilters, ImgeFiltersSelection, ImgeFiltersOther
 import re
@@ -33,7 +33,7 @@ def GetAli(request):
             try:
                 r = requests.get(url)
                 data = r.content
-                soup = BeautifulSoup(r.content, "html.parser")
+                soup = BeautifulSoup(data, "html.parser")
                 images = [] #The Images
                 
                 for i in soup.find_all("img"):
@@ -67,7 +67,30 @@ def GetAli(request):
                 for i in soup.findAll("span", {"class": "p-price"}):
                     price = i.text
                     break;
+                
+                print "this is suppose to be comments"
+                #---------------------------------------------------------
+                
+                for link in soup.find_all('iframe'):
+                    abc = link.get('thesrc')
+                    abc1 = "http:%s" % (abc)
+                print (abc1)
+                
+                r1 = requests.get(abc1)
+                
+                data1 = r1.text
+                
+                soup1 = BeautifulSoup(data1, "html.parser")
+     
+                count = 0
+                comments = []
+                for link in soup1.find_all("dt", {"class": "buyer-feedback"}):
+                    count += 1
+                    print ("-----------Comment %s --------------" % (count))
+                    print (link.text)
+                    comments.append(link.text)
 
+    
                 context = {
                            "title": title,
                            "size": Size,
@@ -77,6 +100,7 @@ def GetAli(request):
                            "images3": images3,  
                            "form": form,
                            "Discrption":Discrption,
+                           "comments": comments,
 
                            }
                 return render(request, 'suppliers1.html', context)
@@ -85,6 +109,11 @@ def GetAli(request):
     else:
         form = SearchForm()
     return render(request, 'suppliers1.html', {'form': form})
+
+
+
+
+
 
 
 
